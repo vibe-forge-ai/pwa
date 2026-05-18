@@ -14,10 +14,374 @@
     <link rel="icon" href="/pwa/favicon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="/pwa/pwa-icon-192.png" />
     <title>Vibe Forge Web</title>
-    <script type="module" crossorigin src="/pwa/assets/index-CLDvdEuy.js"></script>
-    <link rel="stylesheet" crossorigin href="/pwa/assets/index-B2aTK8sb.css">
+    <style>
+    .vf-desktop-startup-overlay {
+      --vf-desktop-startup-bg: #0b0d0b;
+      --vf-desktop-startup-bg-2: #171a15;
+      --vf-desktop-startup-grid: rgba(219, 171, 82, .08);
+      --vf-desktop-startup-text: #f7f7f2;
+      --vf-desktop-startup-muted: #a6afa2;
+      --vf-desktop-startup-accent: #e7aa4d;
+      --vf-startup-shell-padding: 44px;
+      --vf-startup-content-width: 520px;
+      --vf-startup-stack-gap: 18px;
+      --vf-startup-content-offset-y: 12px;
+      --vf-startup-copy-gap: 8px;
+      --vf-startup-description-width: 480px;
+      --vf-startup-description-margin-top: 2px;
+      --vf-startup-progress-margin-top: 6px;
+      --vf-startup-title-size: 26px;
+      --vf-startup-title-line-height: 1.16;
+      --vf-startup-description-size: 14px;
+      --vf-startup-description-line-height: 1.55;
+      --vf-startup-mobile-shell-padding: 28px;
+      --vf-startup-mobile-title-size: 22px;
+      --vf-startup-mobile-description-size: 13px;
+      --vf-startup-progress-duration: 1.5s;
+      --vf-startup-progress-opacity: .88;
+
+      position: fixed;
+      inset: 0;
+      z-index: 2147483000;
+      display: none;
+      place-items: center;
+      padding: var(--vf-startup-shell-padding);
+      background:
+        linear-gradient(
+          135deg,
+          transparent 0 18px,
+          var(--vf-desktop-startup-grid) 18px 19px,
+          transparent 19px 36px
+        ),
+        linear-gradient(
+        180deg,
+        var(--vf-desktop-startup-bg-2),
+        var(--vf-desktop-startup-bg)
+      );
+      color: var(--vf-desktop-startup-text);
+      font-family:
+        -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI',
+        sans-serif;
+      opacity: 0;
+      pointer-events: auto;
+      text-align: center;
+      transition: opacity .38s ease, visibility 0s linear 0s;
+      visibility: hidden;
+    }
+
+    .vf-desktop-startup-overlay::before {
+      position: fixed;
+      inset: 0;
+      content: '';
+      pointer-events: none;
+      opacity: .42;
+      background:
+        linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, .05),
+          transparent
+        ),
+        repeating-linear-gradient(
+        0deg,
+        transparent 0 31px,
+        rgba(255, 255, 255, .04) 31px 32px
+      );
+      mask-image: linear-gradient(
+        180deg,
+        transparent,
+        #000 18%,
+        #000 82%,
+        transparent
+      );
+      -webkit-mask-image: linear-gradient(
+        180deg,
+        transparent,
+        #000 18%,
+        #000 82%,
+        transparent
+      );
+    }
+
+    html[data-vf-desktop-startup-screen='true'] .vf-desktop-startup-overlay {
+      display: grid;
+      opacity: 1;
+      visibility: visible;
+    }
+
+    html[data-vf-desktop-startup-ready='true'] .vf-desktop-startup-overlay {
+      opacity: 0;
+      pointer-events: none;
+      visibility: hidden;
+      transition: opacity .38s ease, visibility 0s linear .38s;
+    }
+
+    html[data-vf-desktop-startup-screen='true'] body {
+      min-height: 100vh;
+      background:
+        linear-gradient(
+          135deg,
+          transparent 0 18px,
+          var(--vf-desktop-startup-grid, rgba(219, 171, 82, .08)) 18px 19px,
+          transparent 19px 36px
+        ),
+        linear-gradient(180deg, #171a15, #0b0d0b);
+    }
+
+    .vf-desktop-startup-overlay__content {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: min(var(--vf-startup-content-width), 100%);
+      min-width: 0;
+      gap: var(--vf-startup-stack-gap);
+      transform: translateY(var(--vf-startup-content-offset-y));
+    }
+
+    .vf-desktop-startup-overlay__icon {
+      position: relative;
+      display: grid;
+      align-items: center;
+      justify-items: center;
+      width: 16vw;
+      max-width: 156px;
+      min-width: 112px;
+      aspect-ratio: 1;
+      isolation: isolate;
+    }
+
+    .vf-desktop-startup-overlay__icon-canvas {
+      position: absolute;
+      inset: 0;
+      display: block;
+      width: 100%;
+      height: 100%;
+      min-width: 0;
+      min-height: 0;
+      border-radius: 24px;
+    }
+
+    .vf-desktop-startup-overlay__icon-loader.mode-light
+      .vf-desktop-startup-overlay__icon-canvas {
+      box-shadow:
+        0 22px 52px rgba(0, 0, 0, .16),
+        0 1px 0 rgba(255, 255, 255, .7) inset;
+    }
+
+    .vf-desktop-startup-overlay__icon-loader.mode-dark
+      .vf-desktop-startup-overlay__icon-canvas {
+      box-shadow:
+        0 34px 78px rgba(0, 0, 0, .7),
+        0 0 0 1px rgba(255, 255, 255, .08),
+        0 0 44px rgba(235, 238, 226, .08),
+        0 1px 0 rgba(255, 255, 255, .1) inset;
+    }
+
+    .vf-desktop-startup-overlay__icon-loader.industrial.mode-light
+      .vf-desktop-startup-overlay__icon-canvas {
+      box-shadow:
+        0 24px 54px rgba(102, 36, 12, .22),
+        0 0 34px rgba(255, 102, 32, .1),
+        0 1px 0 rgba(255, 255, 255, .68) inset;
+    }
+
+    .vf-desktop-startup-overlay__icon-loader.industrial.mode-dark
+      .vf-desktop-startup-overlay__icon-canvas {
+      box-shadow:
+        0 32px 76px rgba(0, 0, 0, .62),
+        0 0 0 1px rgba(255, 144, 64, .16),
+        0 0 52px rgba(255, 72, 20, .2),
+        0 1px 0 rgba(255, 180, 80, .16) inset;
+    }
+
+    .vf-desktop-startup-overlay__icon-loader.metal.mode-light
+      .vf-desktop-startup-overlay__icon-canvas {
+      box-shadow:
+        0 28px 68px rgba(31, 34, 33, .24),
+        0 10px 28px rgba(255, 255, 255, .58) inset,
+        0 -1px 0 rgba(57, 62, 60, .2) inset;
+    }
+
+    .vf-desktop-startup-overlay__icon-loader.metal.mode-dark
+      .vf-desktop-startup-overlay__icon-canvas {
+      box-shadow:
+        0 34px 84px rgba(0, 0, 0, .78),
+        0 0 0 1px rgba(237, 241, 224, .14),
+        0 0 34px rgba(245, 246, 232, .16),
+        0 0 86px rgba(142, 153, 146, .14),
+        0 12px 34px rgba(255, 255, 255, .1) inset,
+        0 -1px 0 rgba(0, 0, 0, .5) inset;
+    }
+
+    .vf-desktop-startup-overlay__icon-loader.matrix.mode-light
+      .vf-desktop-startup-overlay__icon-canvas {
+      box-shadow:
+        0 24px 54px rgba(0, 92, 46, .2),
+        0 0 34px rgba(0, 255, 118, .1),
+        0 1px 0 rgba(255, 255, 255, .68) inset;
+    }
+
+    .vf-desktop-startup-overlay__icon-loader.matrix.mode-dark
+      .vf-desktop-startup-overlay__icon-canvas {
+      box-shadow:
+        0 32px 76px rgba(0, 0, 0, .62),
+        0 0 0 1px rgba(112, 255, 168, .16),
+        0 0 54px rgba(0, 255, 118, .22),
+        0 1px 0 rgba(172, 255, 198, .16) inset;
+    }
+
+    .vf-desktop-startup-overlay__copy {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--vf-startup-copy-gap);
+      min-width: 0;
+    }
+
+    .vf-desktop-startup-overlay__eyebrow {
+      color: var(--vf-desktop-startup-accent);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0;
+      line-height: 1;
+    }
+
+    .vf-desktop-startup-overlay__title {
+      font-size: var(--vf-startup-title-size);
+      font-weight: 720;
+      line-height: var(--vf-startup-title-line-height);
+    }
+
+    .vf-desktop-startup-overlay__tip {
+      min-height: 22px;
+      max-width: min(var(--vf-startup-description-width), 100%);
+      margin: var(--vf-startup-description-margin-top) 0 0;
+      color: var(--vf-desktop-startup-muted);
+      font-size: var(--vf-startup-description-size);
+      line-height: var(--vf-startup-description-line-height);
+      overflow: hidden;
+      transition: opacity .18s ease, transform .18s ease;
+    }
+
+    .vf-desktop-startup-overlay__tip.is-changing {
+      opacity: 0;
+      transform: translateY(2px);
+    }
+
+    .vf-desktop-startup-overlay__progress {
+      position: relative;
+      width: min(320px, 54vw);
+      height: 2px;
+      margin-top: var(--vf-startup-progress-margin-top);
+      overflow: hidden;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, .1);
+    }
+
+    .vf-desktop-startup-overlay__progress > span {
+      position: absolute;
+      top: 0;
+      left: -45%;
+      width: 45%;
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        var(--vf-desktop-startup-accent),
+        transparent
+      );
+      animation: vf-desktop-startup-overlay-progress
+        var(--vf-startup-progress-duration) ease-in-out infinite;
+      opacity: var(--vf-startup-progress-opacity);
+    }
+
+    @keyframes vf-desktop-startup-overlay-progress {
+      0% {
+        transform: translateX(0);
+      }
+
+      100% {
+        transform: translateX(325%);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .vf-desktop-startup-overlay,
+      html[data-vf-desktop-startup-ready='true'] .vf-desktop-startup-overlay {
+        transition: none;
+      }
+
+      .vf-desktop-startup-overlay__progress > span {
+        animation: none;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .vf-desktop-startup-overlay {
+        --vf-startup-shell-padding: var(--vf-startup-mobile-shell-padding);
+        --vf-startup-title-size: var(--vf-startup-mobile-title-size);
+        --vf-startup-description-size: var(
+          --vf-startup-mobile-description-size
+        );
+      }
+
+      .vf-desktop-startup-overlay__icon {
+        width: 118px;
+      }
+
+      .vf-desktop-startup-overlay__tip {
+        max-width: 100%;
+      }
+    }
+    </style>
+    <script type="module" crossorigin src="/pwa/assets/index-B75oIX9M.js"></script>
+    <link rel="stylesheet" crossorigin href="/pwa/assets/index-DVlVMPoP.css">
   </head>
   <body>
     <div id="root"></div>
+    <div
+      id="vf-desktop-startup-overlay"
+      class="vf-desktop-startup-overlay"
+      role="status"
+      aria-live="polite"
+      aria-busy="true"
+      aria-hidden="true"
+    >
+      <div class="vf-desktop-startup-overlay__content">
+        <div
+          class="vf-desktop-startup-overlay__icon"
+          aria-label="Vibe Forge loading animation"
+          data-vf-desktop-startup-icon="true"
+          role="img"
+        >
+        </div>
+        <div class="vf-desktop-startup-overlay__copy">
+          <div
+            class="vf-desktop-startup-overlay__eyebrow"
+            data-vf-desktop-startup-eyebrow="true"
+          >
+            Vibe Forge
+          </div>
+          <div
+            class="vf-desktop-startup-overlay__title"
+            data-vf-desktop-startup-title="true"
+          >
+            项目正在就位
+          </div>
+          <p
+            class="vf-desktop-startup-overlay__tip"
+            data-vf-desktop-startup-tip="true"
+          >
+            正在把项目上下文铺好。
+          </p>
+        </div>
+        <div class="vf-desktop-startup-overlay__progress" aria-hidden="true">
+          <span></span>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
