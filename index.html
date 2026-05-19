@@ -7,12 +7,54 @@
       content="default-src 'self'; base-uri 'self'; object-src 'none'; script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: http: https:; font-src 'self' data:; connect-src 'self' http: https: ws: wss:; worker-src 'self' blob:; frame-src 'self' http: https:; media-src 'self' data: blob:; manifest-src 'self'; form-action 'self'"
     />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#111827" />
+    <meta name="color-scheme" content="light dark" />
+    <meta
+      name="theme-color"
+      content="#ffffff"
+      media="(prefers-color-scheme: light)"
+    />
+    <meta
+      name="theme-color"
+      content="#141414"
+      media="(prefers-color-scheme: dark)"
+    />
     <meta name="apple-mobile-web-app-title" content="Vibe Forge" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
+    <link
+      rel="preload"
+      href="/pwa/assets/material-symbols-rounded-gnWEESCG.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
     <link rel="manifest" href="/pwa/manifest.webmanifest" />
-    <link rel="icon" href="/pwa/favicon.svg" type="image/svg+xml" />
-    <link rel="apple-touch-icon" href="/pwa/pwa-icon-192.png" />
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="/pwa/favicon-metal-light.svg"
+      media="(prefers-color-scheme: light)"
+    />
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="/pwa/favicon-metal-dark.svg"
+      media="(prefers-color-scheme: dark)"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="300x300"
+      href="/pwa/favicon-metal-light.png"
+      media="(prefers-color-scheme: light)"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="300x300"
+      href="/pwa/favicon-metal-dark.png"
+      media="(prefers-color-scheme: dark)"
+    />
+    <link rel="apple-touch-icon" href="/pwa/apple-touch-icon.png" />
     <title>Vibe Forge Web</title>
     <style>
     .vf-desktop-startup-overlay {
@@ -337,8 +379,10 @@
       }
     }
     </style>
-    <script type="module" crossorigin src="/pwa/assets/index-Ck8ln5ev.js"></script>
-    <link rel="stylesheet" crossorigin href="/pwa/assets/index-BYc8mf43.css">
+    <script type="module" crossorigin src="/pwa/assets/index-CzIuHuRi.js"></script>
+    <link rel="modulepreload" crossorigin href="/pwa/assets/vendor-react-Cv9IOnJt.js">
+    <link rel="modulepreload" crossorigin href="/pwa/assets/vendor-state-56LBbOIF.js">
+    <link rel="stylesheet" crossorigin href="/pwa/assets/index-KslsjWU4.css">
   </head>
   <body>
     <div id="root"></div>

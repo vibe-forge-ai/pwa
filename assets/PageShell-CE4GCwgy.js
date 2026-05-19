@@ -1,0 +1,1 @@
+import{j as s}from"./vendor-react-Cv9IOnJt.js";function t({bodyClassName:l,children:a,className:o,header:e}){const n=["page-shell",o].filter(Boolean).join(" "),i=["page-shell__body",l].filter(Boolean).join(" ");return s.jsxs("div",{className:n,children:[e!=null&&s.jsx("div",{className:"page-shell__header",children:e}),s.jsx("div",{className:i,children:a})]})}export{t as P};

@@ -6,12 +6,18 @@
   "scope": ".",
   "display": "standalone",
   "background_color": "#f8fafc",
-  "theme_color": "#111827",
+  "theme_color": "#141414",
   "icons": [
     {
       "src": "favicon.svg",
-      "sizes": "64x64",
+      "sizes": "300x300",
       "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "favicon-metal-light.png",
+      "sizes": "300x300",
+      "type": "image/png",
       "purpose": "any"
     },
     {
